@@ -1,0 +1,34 @@
+# appveyor.yml for node-strip-code
+clone_depth: 10
+
+version: "{build}"
+
+branches:
+  only:
+    - main
+    - develop
+
+environment:
+  matrix:
+    - nodejs_version: "18"
+    - nodejs_version: "20"
+    - nodejs_version: "22"
+#   - nodejs_version: "16"
+#   - nodejs_version: "14"
+
+install:
+  - ps: Install-Product node $env:nodejs_version x64 # Install Node.js
+  - npm install
+
+test_script:
+  - node --version
+  - npm --version
+  - npm test
+
+build: off
+
+matrix:
+  fast_finish: true
+
+cache:
+  - node_modules -> package.json
