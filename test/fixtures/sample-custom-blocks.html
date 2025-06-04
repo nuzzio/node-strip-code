@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test</title>
+    <script>
+        function keepThis() {
+            console.log('kept');
+        }
+        /* BEGIN JS DEBUG */
+        function removeThisJs() {
+            console.log('removed js');
+        }
+        removeThisJs();
+        /* END JS DEBUG */
+    </script>
+</head>
+<body>
+    <h1>Hello</h1>
+    <!--#BEGIN DEBUG#-->
+    <p>This is a debug paragraph.</p>
+    <!--#END DEBUG#-->
+    <p>Regular content.</p>
+</body>
+</html>
