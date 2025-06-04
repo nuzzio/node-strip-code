@@ -1,0 +1,37 @@
+{
+  "name": "node-strip-code",
+  "version": "1.0.0",
+  "description": "A Node.js module to remove sections of code based on comments or patterns.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nuzzio/node-strip-code.git"
+  },
+  "keywords": [
+    "strip",
+    "code",
+    "comments",
+    "remove code",
+    "developer tools",
+    "build tool",
+    "production"
+  ],
+  "author": "Rene Cabral <rene@oki.io> (http://oki.io)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nuzzio/node-strip-code/issues"
+  },
+  "homepage": "https://github.com/nuzzio/node-strip-code#readme",
+  "dependencies": {
+    "escape-string-regexp": "^5.0.0"
+  },
+  "devDependencies": {
+    "tape": "^5.7.5"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
