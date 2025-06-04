@@ -27,8 +27,8 @@ Travis CI
 
 | Branch  | CI                                                                                                                                 | Tests                                                                                                                                                                        |
 |:--------|:-----------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| main    | [![Build Status](https://travis-ci.com/nuzzio/node-strip-code.svg?branch=main)](https://travis-ci.com/nuzzio/node-strip-code)     | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=main)](https://coveralls.io/github/nuzzio/node-strip-code?branch=main)         |
-| develop | [![Build Status](https://travis-ci.com/nuzzio/node-strip-code.svg?branch=develop)](https://travis-ci.com/nuzzio/node-strip-code) | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=develop)](https://coveralls.io/github/nuzzio/node-strip-code?branch=develop) |
+| main    | [![Build Status](https://app.travis-ci.com/nuzzio/node-strip-code.svg?token=Tk8q7NrWmC7HPMc6XTPP&branch=main)](https://travis-ci.com/nuzzio/node-strip-code)     | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=main)](https://coveralls.io/github/nuzzio/node-strip-code?branch=main)         |
+| develop | [![Build Status](https://app.travis-ci.com/nuzzio/node-strip-code.svg?token=Tk8q7NrWmC7HPMc6XTPP&branch=develop)](https://travis-ci.com/nuzzio/node-strip-code) | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=develop)](https://coveralls.io/github/nuzzio/node-strip-code?branch=develop) |
 
 
 AppVeyor
