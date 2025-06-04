@@ -25,18 +25,18 @@ This module is the core logic behind the [grunt-strip-code](https://github.com/n
 
 Travis CI
 
-| Branch  | CI  | Tests |
-| :------------ |:--------------- | :--------------- |
-| master        | [![Build Status](https://travis-ci.com/nuzzio/grunt-strip-code.svg?branch=master)](https://travis-ci.com/nuzzio/grunt-strip-code) | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/grunt-strip-code/badge.svg?branch=master)](https://coveralls.io/github/nuzzio/grunt-strip-code?branch=master) |
-| develop   | [![Build Status](https://travis-ci.com/nuzzio/grunt-strip-code.svg?branch=develop)](https://travis-ci.com/nuzzio/grunt-strip-code) | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/grunt-strip-code/badge.svg?branch=develop)](https://coveralls.io/github/nuzzio/grunt-strip-code?branch=develop) |
+| Branch  | CI                                                                                                                                 | Tests                                                                                                                                                                        |
+|:--------|:-----------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| main    | [![Build Status](https://travis-ci.com/nuzzio/node-strip-code.svg?branch=main)](https://travis-ci.com/nuzzio/node-strip-code)     | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=main)](https://coveralls.io/github/nuzzio/node-strip-code?branch=main)         |
+| develop | [![Build Status](https://travis-ci.com/nuzzio/node-strip-code.svg?branch=develop)](https://travis-ci.com/nuzzio/node-strip-code) | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=develop)](https://coveralls.io/github/nuzzio/node-strip-code?branch=develop) |
 
 
 AppVeyor
 
-| Branch  | CI  |
-| :------------ |:--------------- |
-| master        | [![Build Status](https://ci.appveyor.com/api/projects/status/nko1optg81v0kew2/branch/master?svg=true)](https://ci.appveyor.com/project/nuzzio/grunt-strip-code) |
-| develop   | [![Build Status](https://ci.appveyor.com/api/projects/status/nko1optg81v0kew2/branch/develop?svg=true)](https://ci.appveyor.com/project/nuzzio/grunt-strip-code) |
+| Branch  | CI                                                                                                                                                              |
+|:--------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| main    | [![Build Status](https://ci.appveyor.com/api/projects/status/9nmtj03i0f0k2yrx/branch/main?svg=true)](https://ci.appveyor.com/project/nuzzio/node-strip-code)    |
+| develop | [![Build Status](https://ci.appveyor.com/api/projects/status/9nmtj03i0f0k2yrx/branch/develop?svg=true)](https://ci.appveyor.com/project/nuzzio/node-strip-code) |
 
 
 
