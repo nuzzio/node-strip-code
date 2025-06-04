@@ -22,21 +22,5 @@ script:
 
 # Optional: configure notifications, coverage reporting, etc.
 after_success:
-  - npm run coverage # if you set up a coverage script
   - npm run coveralls # if using coveralls.io
 
-jobs:
-  include:
-    - stage: release
-      node_js: "20" # Or your preferred release Node version
-      if: branch = main AND type = push AND tag IS present
-      script:
-        - echo "Skipping tests for release tag"
-      deploy:
-        provider: npm
-        email: "$NPM_EMAIL" # Set in Travis CI settings
-        api_key: "$NPM_TOKEN"  # Set in Travis CI settings as a secure variable
-        skip_cleanup: true
-        on:
-          tags: true
-          repo: "nuzzio/node-strip-code" # Make sure this matches your repo
