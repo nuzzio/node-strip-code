@@ -263,7 +263,7 @@ anotherUsefulFunction();`
 // For Test 2 (Custom blocks)
 writeFixture('sample-custom-blocks.html',
   `<!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <title>Test</title>
     <script>
@@ -289,7 +289,7 @@ writeFixture('sample-custom-blocks.html',
 );
 writeExpected('sample-custom-blocks.html',
   `<!DOCTYPE html>
-<html>
+<html lang="">
 <head>
     <title>Test</title>
     <script>
