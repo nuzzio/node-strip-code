@@ -44,40 +44,33 @@ AppVeyor
 ## Features
 
 * Strip code blocks defined by start and end comment-like delimiters.
-
 * Strip code based on custom regular expression patterns.
-
 * Supports multiple block types and multiple patterns.
-
 * Optional checks for block parity (equal start/end tags) and block intersection (improper nesting).
-
 * Returns a list of issues (errors/warnings) found during processing.
-
 * Supports legacy options for backward compatibility with earlier versions of `grunt-strip-code`.
 
 ## Installation
 
 Install using npm:
 
-```
+```bash
 npm install node-strip-code --save-dev
-
-
 ```
 
 Or using yarn:
 
-```
+```bash
 yarn add node-strip-code --dev
-
-
 ```
 
 ## Usage
 
-```
-const strip = require('node-strip-code');
-const fs = require('fs');
+**As an ES Module (if your project uses `"type": "module"` in `package.json` or you're using `.mjs` files):**
+
+```javascript
+import strip from 'node-strip-code';
+import fs from 'fs'; // Using ESM import for built-in module
 
 // Example source code
 const sourceCode = `
@@ -120,7 +113,7 @@ const options = {
   intersectionCheck: true   // Default: true
 };
 
-// Process the code
+// Process the code (strip is now synchronous)
 const result = strip(sourceCode, options);
 
 // Check for issues
@@ -155,46 +148,52 @@ Output might look like:
   mainFeature();
 
 */
-
-
 ```
+
+**If you need to use this ES Module from a CommonJS project:**
+
+You would typically use dynamic `import()`:
+
+```javascript
+// In a CommonJS file (e.g., your_script.js)
+async function main() {
+  const { default: strip } = await import('node-strip-code'); // Dynamic import for ESM
+  const fs = require('fs'); // fs can still be required
+
+  const sourceCode = "..."; // (Same as above)
+  const options = { /* ... */ }; // (Same as above)
+  
+  // strip() itself is synchronous once imported
+  const result = strip(sourceCode, options); 
+  
+  // ... (logging issues and results, same as above) ...
+}
+
+main().catch(console.error);
+```
+
 
 ## API
 
 ### `strip(codeString, [userOptions])`
 
-Processes the input `codeString` and returns an object containing the `strippedCode` and an array of `issues`.
+Processes the input `codeString` and returns an object containing the `strippedCode` and an array of `issues`. This function is **synchronous**.
 
 * `codeString` (String): The source code string to process.
-
 * `userOptions` (Object, optional): Configuration options for the stripping process.
-
-    * `blocks` (Array, optional): An array of block definition objects. Each object should have:
-
+    * `blocks` (Array<Object>, optional): An array of block definition objects. Each object should have:
         * `start_block` (String): The text of the opening comment/delimiter.
-
         * `end_block` (String): The text of the closing comment/delimiter.
-
-        * Default: `[{ start_block: "/* test-code *\/", end_block: "/* end-test-code *\/"" }]`
-
-    * `patterns` (RegExp | Array, optional): A single regular expression or an array of regular expressions. Code matching these patterns will be removed.
-
+        * Default: `[{ start_block: "/* test-code *\/", end_block: "/* end-test-code */" }]`
+    * `patterns` (RegExp | Array<RegExp>, optional): A single regular expression or an array of regular expressions. Code matching these patterns will be removed.
         * Default: `[]`
-
     * `parityCheck` (Boolean, optional): If `true`, performs a check to ensure that for each block type, there's an equal number of start and end delimiters. Errors are reported in the `issues` array.
-
         * Default: `true`
-
     * `intersectionCheck` (Boolean, optional): If `true`, performs a check for improperly nested or intersecting blocks. Errors are reported in the `issues` array.
-
         * Default: `true`
-
     * `legacy` (Object, optional): An object for backward compatibility with options from `grunt-strip-code` v0.1.x.
-
         * `start_comment` (String): Legacy start comment text (e.g., `test-code`). Becomes `/* test-code */`.
-
         * `end_comment` (String): Legacy end comment text. Becomes `/* end-test-code */`.
-
         * `pattern` (RegExp): A legacy regex pattern. If provided, this pattern is added to the modern `patterns` array.
 
 **Return Value:**
@@ -202,17 +201,11 @@ Processes the input `codeString` and returns an object containing the `strippedC
 An object with the following properties:
 
 * `strippedCode` (String): The processed code string. If `parityCheck` or `intersectionCheck` are enabled and fatal errors are detected, this might be the original `codeString` (stripping is skipped to prevent data corruption).
-
-* `issues` (Array): An array of issue objects found during processing. Each issue object typically has:
-
+* `issues` (Array<Object>): An array of issue objects found during processing. Each issue object typically has:
     * `type` (String): The type of issue, e.g., `'error'` or `'warning'`.
-
     * `id` (String): A machine-readable identifier for the issue (e.g., `'parity_unclosed_start'`, `'intersection_mismatch'`).
-
     * `message` (String): A human-readable description of the issue.
-
     * `line` (Number, optional): The line number in the original `codeString` where the issue was detected.
-
     * `blockName` (String, optional): The name/description of the block involved in the issue.
 
 **Behavior with Validation Errors:**
@@ -224,11 +217,8 @@ If both `parityCheck` and `intersectionCheck` are set to `false`, stripping will
 ## Use Cases
 
 * Removing `console.log`, `console.warn`, etc., statements from production code.
-
 * Stripping out debug-only sections of HTML or JavaScript.
-
 * Removing test-specific code or hooks (e.g., exposing internal functions for unit tests) that should not be in the final build.
-
 * Conditional compilation based on comment blocks for different environments.
 
 ## Contributing

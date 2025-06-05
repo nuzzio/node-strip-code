@@ -7,13 +7,12 @@
  */
 
 // node-strip-code/index.js
-'use strict';
+// 'use strict'; // Not necessary in ES Modules
 
-// escape-string-regexp will be imported dynamically
+import escapeStringRegexp from 'escape-string-regexp';
 
 /**
  * Strips code from a string based on specified block comments or regex patterns.
- * This function is asynchronous due to the use of dynamic import.
  *
  * @param {string} codeString The source code string to process.
  * @param {object} [userOptions={}] Configuration options for stripping.
@@ -27,14 +26,11 @@
  * @param {string} [userOptions.legacy.start_comment] Legacy start comment text (without /* and *\/).
  * @param {string} [userOptions.legacy.end_comment] Legacy end comment text.
  * @param {RegExp} [userOptions.legacy.pattern] Legacy regex pattern.
- * @returns {Promise<{strippedCode: string, issues: Array<object>}>} A Promise that resolves to an object
+ * @returns {{strippedCode: string, issues: Array<object>}} An object
  * containing the stripped code and an array of any issues found.
  */
-async function strip(codeString, userOptions = {}) {
-  // Dynamically import escape-string-regexp
-  // .default is used as escape-string-regexp is an ES module with a default export
-  const escapeStringRegexpModule = await import('escape-string-regexp');
-  const escapeStringRegexp = escapeStringRegexpModule.default;
+function strip(codeString, userOptions = {}) {
+  // escapeStringRegexp is now available from the static import
 
   const issues = [];
   let strippedCode = codeString;
@@ -262,4 +258,4 @@ async function strip(codeString, userOptions = {}) {
   return { strippedCode, issues };
 }
 
-module.exports = strip;
+export default strip; // Changed to ES Module export

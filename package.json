@@ -6,8 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "node test/test.js",
-    "coverage": "nyc npm test",
-    "coverage:html": "nyc report --reporter=html"
+    "coverage": "c8 node test/test.js",
+    "coverage:html": "c8 report --reporter=html",
+    "coverage:lcov": "c8 report --reporter=lcovonly"
   },
   "repository": {
     "type": "git",
@@ -33,7 +34,7 @@
   },
   "devDependencies": {
     "tape": "^5.7.5",
-    "nyc": "^15.1.0"
+    "c8": "^10.1.2"
   },
   "engines": {
     "node": ">=14.0.0"

@@ -1,10 +1,16 @@
 // node-strip-code/test/test.js
-'use strict';
+// 'use strict'; // Not needed in ESM
 
-const test = require('tape');
-const strip = require('../index.js'); // Assuming index.js is in the parent directory
-const fs = require('fs');
-const path = require('path');
+import test from 'tape';
+import strip from '../index.js'; // ES Module import
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url'; // For __dirname equivalent in ESM
+
+// ESM equivalent for __dirname
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 function writeFixture(filename, content) {
   const filePath = path.join(__dirname, 'fixtures', filename);
@@ -307,18 +313,18 @@ writeExpected('sample-custom-blocks.html',
 // ---- End of Fixture Setup ----
 
 // Test 1
-test('Default options: strips /* test-code */ blocks', async (t) => {
+test('Default options: strips /* test-code */ blocks', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-default.js');
   const expected = readExpected('sample-default.js');
-  const result = await strip(source);
+  const result = strip(source); // No await
 
   t.equal(result.strippedCode.trim(), expected.trim(), 'should strip default blocks');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 2
-test('Custom blocks: strips specified HTML and JS comments', async (t) => {
+test('Custom blocks: strips specified HTML and JS comments', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-custom-blocks.html');
   const expected = readExpected('sample-custom-blocks.html');
@@ -328,13 +334,13 @@ test('Custom blocks: strips specified HTML and JS comments', async (t) => {
       { start_block: '/* BEGIN JS DEBUG */', end_block: '/* END JS DEBUG */' }
     ]
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should strip custom HTML and JS blocks');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 3
-test('Pattern options: strips console.log statements', async (t) => {
+test('Pattern options: strips console.log statements', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-patterns.js');
   const expected = readExpected('sample-patterns.js');
@@ -342,16 +348,16 @@ test('Pattern options: strips console.log statements', async (t) => {
     patterns: /\s*console\.log\s*\([\s\S]*?\)\s*;?\s*(\r?\n)?/g,
     blocks: []
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should strip console.log using pattern');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 4
-test('Parity check: detects unclosed block', async (t) => {
+test('Parity check: detects unclosed block', (t) => { // No async
   t.plan(3);
   const source = "/* test-code */ unclosed content";
-  const result = await strip(source, { parityCheck: true, intersectionCheck: false });
+  const result = strip(source, { parityCheck: true, intersectionCheck: false }); // No await
 
   t.equal(result.strippedCode, source, 'should not strip code if parity error and checks enabled');
   t.equal(result.issues.length, 1, 'should report one issue');
@@ -363,7 +369,7 @@ test('Parity check: detects unclosed block', async (t) => {
 });
 
 // Test 5
-test('Intersection check: detects improperly nested blocks (multi-line)', async (t) => {
+test('Intersection check: detects improperly nested blocks (multi-line)', (t) => { // No async
   t.plan(3);
   const source = readFixture('sample-intersection-multiline.js');
   const expected = readExpected('sample-intersection-multiline.js');
@@ -375,7 +381,7 @@ test('Intersection check: detects improperly nested blocks (multi-line)', async 
     parityCheck: false,
     intersectionCheck: true
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
 
   t.equal(result.strippedCode.trim(), expected.trim(), 'should not strip code if intersection error and checks enabled');
   t.ok(result.issues && Array.isArray(result.issues) && result.issues.length > 0, 'should report issues and issues should be an array');
@@ -388,7 +394,7 @@ test('Intersection check: detects improperly nested blocks (multi-line)', async 
 });
 
 // Test 6
-test('Legacy options: start_comment and end_comment', async (t) => {
+test('Legacy options: start_comment and end_comment', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-legacy.js');
   const expected = readExpected('sample-legacy.js');
@@ -399,13 +405,13 @@ test('Legacy options: start_comment and end_comment', async (t) => {
     },
     blocks: []
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should strip using legacy start/end_comment');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 7
-test('Legacy options: pattern', async (t) => {
+test('Legacy options: pattern', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-legacy-pattern.js');
   const expected = readExpected('sample-legacy-pattern.js');
@@ -415,45 +421,45 @@ test('Legacy options: pattern', async (t) => {
     },
     blocks: []
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should strip using legacy pattern');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 8
-test('No matching blocks or patterns: should return original code', async (t) => {
+test('No matching blocks or patterns: should return original code', (t) => { // No async
   t.plan(2);
   const source = 'const a = 10;\nfunction hello() { return "world"; }';
   const options = {
     blocks: [{ start_block: "/* no-match */", end_block: "/* end-no-match */" }],
     patterns: [/nonExistentPattern/g]
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode, source, 'code should be unchanged');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 9
-test('Empty input string', async (t) => {
+test('Empty input string', (t) => { // No async
   t.plan(2);
   const source = '';
-  const result = await strip(source);
+  const result = strip(source); // No await
   t.equal(result.strippedCode, '', 'stripped code should be empty');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 10
-test('Input string with only comments to be stripped', async (t) => {
+test('Input string with only comments to be stripped', (t) => { // No async
   t.plan(2);
   const source = '/* test-code */\nconsole.log("remove");\n/* end-test-code */';
   const expected = '';
-  const result = await strip(source);
+  const result = strip(source); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'code should be empty or whitespace after stripping');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 11
-test('Legacy Precedence: pattern over start/end comments', async (t) => {
+test('Legacy Precedence: pattern over start/end comments', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-legacy-precedence.js');
   const expected = readExpected('sample-legacy-precedence.js');
@@ -465,13 +471,13 @@ test('Legacy Precedence: pattern over start/end comments', async (t) => {
     },
     blocks: []
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'legacy pattern should take precedence');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 12
-test('Intersection: A starts, B starts, A ends (error), B ends (complex fixture)', async (t) => {
+test('Intersection: A starts, B starts, A ends (error), B ends (complex fixture)', (t) => { // No async
   t.plan(3);
   const source = readFixture('sample-complex-intersection.js');
   const expected = readExpected('sample-complex-intersection.js');
@@ -483,7 +489,7 @@ test('Intersection: A starts, B starts, A ends (error), B ends (complex fixture)
     parityCheck: true,
     intersectionCheck: true
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
 
   t.equal(result.strippedCode.trim(), expected.trim(), 'should not strip code due to intersection error');
   t.ok(result.issues && Array.isArray(result.issues) && result.issues.length > 0, 'should report issues and issues should be an array');
@@ -496,7 +502,7 @@ test('Intersection: A starts, B starts, A ends (error), B ends (complex fixture)
 });
 
 // Test 13
-test('Multiple distinct block types in one file', async (t) => {
+test('Multiple distinct block types in one file', (t) => { // No async
   t.plan(3);
   const source = readFixture('sample-multiple-blocks.js');
   const expected = source;
@@ -509,7 +515,7 @@ test('Multiple distinct block types in one file', async (t) => {
     parityCheck: true,
     intersectionCheck: true
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should not strip due to Type C parity error');
 
   t.ok(result.issues && result.issues.length > 0, 'should report at least one issue');
@@ -522,7 +528,7 @@ test('Multiple distinct block types in one file', async (t) => {
 });
 
 // Test 14
-test('Blocks with special regex characters in delimiters', async (t) => {
+test('Blocks with special regex characters in delimiters', (t) => { // No async
   t.plan(2);
   const originalFixture = 'sample-special-chars.js';
   const tempFixtureContent = `keepOpening();\n/*$START$*/\nremoveSpecial();\n/*$END$*/\nkeepClosing();`;
@@ -539,14 +545,14 @@ test('Blocks with special regex characters in delimiters', async (t) => {
       { start_block: "/*$START$*/", end_block: "/*$END$*/" }
     ]
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
 
   t.equal(result.strippedCode.trim(), expected.trim(), 'should handle special characters in delimiters');
   t.deepEqual(result.issues, [], 'should have no issues with valid special char blocks');
 });
 
 // Test 15
-test('Checks disabled (parityCheck: false, intersectionCheck: false) with problematic code', async (t) => {
+test('Checks disabled (parityCheck: false, intersectionCheck: false) with problematic code', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-checks-disabled.js');
   const expected = readExpected('sample-checks-disabled.js');
@@ -559,13 +565,13 @@ test('Checks disabled (parityCheck: false, intersectionCheck: false) with proble
     parityCheck: false,
     intersectionCheck: false
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should strip code even with underlying errors when checks are off');
   t.deepEqual(result.issues, [], 'should report no issues from the strip function itself when checks are off');
 });
 
 // Test 16
-test('More complex parity: A starts, A starts (extra), A ends, A ends (extra)', async (t) => {
+test('More complex parity: A starts, A starts (extra), A ends, A ends (extra)', (t) => { // No async
   t.plan(3);
   const source = readFixture('sample-complex-parity.js');
   const expected = readExpected('sample-complex-parity.js');
@@ -574,7 +580,7 @@ test('More complex parity: A starts, A starts (extra), A ends, A ends (extra)', 
     parityCheck: true,
     intersectionCheck: false
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should not strip code due to parity errors');
 
   t.ok(result.issues && result.issues.length >= 1, 'should report at least one parity issue. Count: ' + (result.issues ? result.issues.length : 'N/A'));
@@ -589,46 +595,46 @@ test('More complex parity: A starts, A starts (extra), A ends, A ends (extra)', 
 });
 
 // Test 17
-test('Block at start of file', async (t) => {
+test('Block at start of file', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-block-at-start.js');
   const expected = readExpected('sample-block-at-start.js');
   const options = {
     blocks: [ { start_block: "/* remove-me */", end_block: "/* end-remove-me */" } ]
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should correctly strip block at start of file');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 18
-test('Block at end of file', async (t) => {
+test('Block at end of file', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-block-at-end.js');
   const expected = readExpected('sample-block-at-end.js');
   const options = {
     blocks: [ { start_block: "/* remove-me-at-end */", end_block: "/* end-remove-me-at-end */" } ]
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should correctly strip block at end of file');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 19
-test('Empty block (no content between delimiters)', async (t) => {
+test('Empty block (no content between delimiters)', (t) => { // No async
   t.plan(2);
   const source = readFixture('sample-empty-block.js');
   const expected = readExpected('sample-empty-block.js');
   const options = {
     blocks: [ { start_block: "/* empty */", end_block: "/* end-empty */" } ]
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should correctly strip empty block');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 20
-test('Block delimiters with leading/trailing spaces in source', async (t) => {
+test('Block delimiters with leading/trailing spaces in source', (t) => { // No async
   t.plan(2);
   const source = `
         console.log("before");
@@ -641,39 +647,39 @@ test('Block delimiters with leading/trailing spaces in source', async (t) => {
         console.log("before");
         console.log("after");
     `;
-  const result = await strip(source);
+  const result = strip(source); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should strip blocks with extra spaces around delimiters');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 21
-test('No stripping if only patterns are defined but none match', async (t) => {
+test('No stripping if only patterns are defined but none match', (t) => { // No async
   t.plan(2);
   const source = 'const x = 1;\nconst y = 2;';
   const options = {
     blocks: [],
     patterns: [/nonExistentPattern/g]
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode, source, 'code should be unchanged');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 22
-test('Option: blocks as a single object instead of array', async (t) => {
+test('Option: blocks as a single object instead of array', (t) => { // No async
   t.plan(2);
   const source = 'abc\n/* single-obj */\ndef\n/* end-single-obj */\nghi';
   const expected = 'abc\nghi';
   const options = {
     blocks: { start_block: '/* single-obj */', end_block: '/* end-single-obj */' }
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should handle options.blocks as a single object');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
 
 // Test 23
-test('Option: patterns as a single RegExp instead of array', async (t) => {
+test('Option: patterns as a single RegExp instead of array', (t) => { // No async
   t.plan(2);
   const source = 'line1\nremoveThisLine();\nline3';
   const expected = 'line1\nline3';
@@ -681,7 +687,7 @@ test('Option: patterns as a single RegExp instead of array', async (t) => {
     patterns: /removeThisLine\(\);(\r?\n)?/g,
     blocks: []
   };
-  const result = await strip(source, options);
+  const result = strip(source, options); // No await
   t.equal(result.strippedCode.trim(), expected.trim(), 'should handle options.patterns as a single RegExp');
   t.deepEqual(result.issues, [], 'should have no issues');
 });
