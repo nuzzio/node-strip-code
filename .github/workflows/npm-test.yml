@@ -29,9 +29,8 @@ jobs:
 
     - run: mkdir -p /home/runner/work/node-strip-code/node-strip-code/coverage/tmp
     - run: npm ci
+    - run: npm run coverage
     - run: npm run coverage:lcov
-    - run: ls -la coverage
-    - run: cat coverage/lcov.info
 
     - name: Coveralls GitHub Action
       uses: coverallsapp/github-action@v2.3.6
