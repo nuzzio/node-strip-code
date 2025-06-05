@@ -25,10 +25,10 @@ This module is the core logic behind the [grunt-strip-code](https://github.com/n
 
 Travis CI
 
-| Branch  | CI                                                                                                                                 | Tests                                                                                                                                                                        |
-|:--------|:-----------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| main    | [![Build Status](https://app.travis-ci.com/nuzzio/node-strip-code.svg?token=Tk8q7NrWmC7HPMc6XTPP&branch=main)](https://travis-ci.com/nuzzio/node-strip-code)     | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=main)](https://coveralls.io/github/nuzzio/node-strip-code?branch=main)         |
-| develop | [![Build Status](https://app.travis-ci.com/nuzzio/node-strip-code.svg?token=Tk8q7NrWmC7HPMc6XTPP&branch=develop)](https://travis-ci.com/nuzzio/node-strip-code) | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=develop)](https://coveralls.io/github/nuzzio/node-strip-code?branch=develop) |
+| Branch  | CI                                                                                                            | Tests                                                                                                                                                                        |
+|:--------|:--------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| main    | ![example](https://github.com/nuzzio/node-strip-code/actions/workflows/npm-test.yml/badge.svg?branch=main)    | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=main)](https://coveralls.io/github/nuzzio/node-strip-code?branch=main)         |
+| develop | ![example](https://github.com/nuzzio/node-strip-code/actions/workflows/npm-test.yml/badge.svg?branch=develop) | [![Coverage Status](https://coveralls.io/repos/github/nuzzio/node-strip-code/badge.svg?branch=develop)](https://coveralls.io/github/nuzzio/node-strip-code?branch=develop) |
 
 
 AppVeyor
