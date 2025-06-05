@@ -23,7 +23,7 @@
     "build tool",
     "production"
   ],
-  "author": "Rene Cabral <rene@oki.io> (http://oki.io)",
+  "author": "Rene Cabral <rene@oki.io> (https://oki.io)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nuzzio/node-strip-code/issues"
